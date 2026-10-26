@@ -1,0 +1,3 @@
+# 元のコードは公開しない (難読化した script.js だけを公開する)
+/src/
+node_modules/

@@ -1,0 +1,12 @@
+{
+  "name": "boku224-homepage",
+  "private": true,
+  "description": "boku lylack の個人ページ (GitHub Pages)",
+  "scripts": {
+    "build": "node build.js",
+    "build:dev": "node build.js --dev"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "4.1.1"
+  }
+}
