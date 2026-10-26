@@ -138,9 +138,9 @@ a { color: inherit; }
 }
 
 .avatar {
-  width: 76px;
-  height: 76px;
-  border-radius: 22px;
+  width: 104px;
+  height: 104px;
+  border-radius: 26px;
   margin-bottom: 28px;
   display: grid;
   place-items: center;
@@ -161,8 +161,8 @@ a { color: inherit; }
   content: "";
   position: absolute;
   inset: 2px;
-  border-radius: 20px;
-  background: var(--tile-solid);
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 35%, #1c2836, var(--tile-solid) 70%);
 }
 .avatar span, .avatar img { position: relative; z-index: 1; }
 .avatar span {
@@ -173,7 +173,7 @@ a { color: inherit; }
 .avatar img {
   width: calc(100% - 4px);
   height: calc(100% - 4px);
-  border-radius: 20px;
+  border-radius: 24px;
   object-fit: cover;
 }
 @keyframes spin { to { transform: rotate(360deg); } }

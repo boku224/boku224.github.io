@@ -8,7 +8,7 @@ const LINKS = [
 ];
 
 // アイコン画像を置いたらパスを書く (例: "assets/avatar.png")。空ならイニシャル表示。
-const AVATAR = "";
+const AVATAR = "assets/avatar.png";
 
 // メールアドレス (自動収集を避けるため分割して組み立てる)
 const MAIL = ["bokulylack", "gmail.com"];
