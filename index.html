@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>boku lylack</title>
+  <meta name="description" content="boku lylack の個人ページ。Aether City を開発しています。">
+  <meta property="og:title" content="boku lylack">
+  <meta property="og:description" content="Aether City を開発しています。">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <header class="hero">
+      <div class="avatar" id="avatar" aria-hidden="true"><span>BL</span></div>
+      <div class="hero-text">
+        <p class="prompt"><span class="user">guest@lylack</span>:<span class="path">~</span>$ <span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
+        <h1>boku lylack</h1>
+        <p class="tagline">Aether City を開発しています。</p>
+      </div>
+    </header>
+
+    <section class="card" aria-labelledby="about-h">
+      <h2 id="about-h"><span class="hash">#</span> about</h2>
+      <p>ゲームサーバーの開発をしています。スクリプトから UI、制作用のツールまで、必要なものは自分で作るのが好きです。</p>
+    </section>
+
+    <section class="card" aria-labelledby="skills-h">
+      <h2 id="skills-h"><span class="hash">#</span> skills</h2>
+      <ul class="skills">
+        <li>
+          <span class="lang js">JS</span>
+          <div>
+            <strong>JavaScript</strong>
+            <p>Web の UI、ツール、ブラウザで動くアプリ</p>
+          </div>
+        </li>
+        <li>
+          <span class="lang py">Py</span>
+          <div>
+            <strong>Python</strong>
+            <p>自動化スクリプト、データ変換、制作ツール</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="links-h">
+      <h2 id="links-h"><span class="hash">#</span> links</h2>
+      <ul class="links" id="links"></ul>
+    </section>
+
+    <section class="card" aria-labelledby="contact-h">
+      <h2 id="contact-h"><span class="hash">#</span> contact</h2>
+      <p>お問い合わせはメールでどうぞ。</p>
+      <p class="mail"><a id="mail" href="#">メールアドレスを表示</a></p>
+    </section>
+
+    <footer class="foot">
+      <span>&copy; <span id="year"></span> boku lylack</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
