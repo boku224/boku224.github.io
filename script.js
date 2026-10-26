@@ -13,6 +13,17 @@ const AVATAR = "assets/avatar.png";
 // メールアドレス (自動収集を避けるため分割して組み立てる)
 const MAIL = ["bokulylack", "gmail.com"];
 
+// 作品。上から順に並ぶ。
+//   title: 名前 / desc: ひとこと説明 / tags: 使った技術など
+//   image: サムネイル画像のパス (例: "assets/works/tool.png")。空なら模様の背景
+//   url:   リンク先。空ならクリックできないカードになる
+//   soon:  true にすると「準備中」のカードになる
+const WORKS = [
+  { title: "Coming soon", desc: "作品を準備しています。", tags: [], soon: true },
+  { title: "Coming soon", desc: "作品を準備しています。", tags: [], soon: true },
+  { title: "Coming soon", desc: "作品を準備しています。", tags: [], soon: true },
+];
+
 // ===== ここから下は通常いじらなくてよい =====
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -59,6 +70,42 @@ for (const l of LINKS) {
   linksEl.appendChild(li);
 }
 
+// ---- 作品 ----
+const worksEl = document.getElementById("works-grid");
+for (const w of WORKS) {
+  const card = document.createElement(w.url ? "a" : "article");
+  card.className = "tile work reveal" + (w.soon ? " soon" : "");
+  if (w.url) {
+    card.href = w.url;
+    card.target = "_blank";
+    card.rel = "noopener noreferrer";
+  }
+  card.innerHTML =
+    `<div class="work-thumb"></div>` +
+    `<div class="work-body">` +
+    `<p class="work-title"><span class="t"></span>${w.url ? '<span class="arrow" aria-hidden="true">↗</span>' : ""}</p>` +
+    `<p class="work-desc"></p><ul class="tags"></ul></div>`;
+  const thumb = card.querySelector(".work-thumb");
+  if (w.image) {
+    const img = new Image();
+    img.src = w.image;
+    img.alt = "";
+    img.loading = "lazy";
+    thumb.appendChild(img);
+  } else {
+    thumb.innerHTML = `<span class="ph">${w.soon ? "// coming soon" : "// no image"}</span>`;
+  }
+  card.querySelector(".t").textContent = w.title;
+  card.querySelector(".work-desc").textContent = w.desc || "";
+  const tags = card.querySelector(".tags");
+  for (const t of w.tags || []) {
+    const li = document.createElement("li");
+    li.textContent = t;
+    tags.appendChild(li);
+  }
+  worksEl.appendChild(card);
+}
+
 // ---- アイコン ----
 if (AVATAR) {
   const av = document.getElementById("avatar");
@@ -93,34 +140,116 @@ const tickClock = () => {
 tickClock();
 setInterval(tickClock, 1000);
 
+// ---- 名前の解読演出 ----
+const GLYPHS = "!<>-_/[]{}=+*^?#01アイウエオカキクケコ";
+const decode = (el, delay) => {
+  const text = el.dataset.text;
+  let frame = 0;
+  const total = 26;
+  const run = () => {
+    let html = "";
+    for (let i = 0; i < text.length; i++) {
+      const settle = Math.floor((i / text.length) * total * 0.7) + 8;
+      if (frame >= settle) html += text[i];
+      else html += `<span class="sc">${GLYPHS[(Math.random() * GLYPHS.length) | 0]}</span>`;
+    }
+    el.innerHTML = html;
+    if (++frame <= total) setTimeout(run, 45);
+    else el.textContent = text;
+  };
+  setTimeout(run, delay);
+};
+
 // ---- タイピング ----
 const typed = document.getElementById("typed");
-const cmd = "whoami";
-if (reduceMotion) {
-  typed.textContent = cmd;
-} else {
+const startTyping = () => {
+  const cmd = "whoami";
+  if (reduceMotion) { typed.textContent = cmd; return; }
   let i = 0;
   const tick = () => {
     typed.textContent = cmd.slice(0, ++i);
     if (i < cmd.length) setTimeout(tick, 90 + Math.random() * 80);
   };
-  setTimeout(tick, 700);
-}
+  setTimeout(tick, 300);
+};
 
 // ---- 表示アニメーション ----
-const reveals = document.querySelectorAll(".reveal");
-document.querySelectorAll(".hero .reveal").forEach((el, i) => el.style.setProperty("--d", `${i * 0.09}s`));
-document.querySelectorAll(".bento .reveal").forEach((el, i) => el.style.setProperty("--d", `${(i % 4) * 0.07}s`));
-if ("IntersectionObserver" in window) {
-  const io = new IntersectionObserver((entries) => {
-    for (const en of entries) {
-      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+const startReveal = () => {
+  const reveals = document.querySelectorAll(".reveal");
+  document.querySelectorAll(".hero .reveal").forEach((el, i) => el.style.setProperty("--d", `${i * 0.09}s`));
+  document.querySelectorAll(".bento .reveal, .works .reveal").forEach((el, i) => el.style.setProperty("--d", `${(i % 4) * 0.07}s`));
+  // 画面に入ったものから表示する (スクロールのたびに位置を見る)
+  let pending = [...reveals];
+  let queued = false;
+  const check = () => {
+    queued = false;
+    const limit = window.innerHeight - 8;
+    pending = pending.filter((el) => {
+      if (el.getBoundingClientRect().top < limit) { el.classList.add("in"); return false; }
+      return true;
+    });
+    if (!pending.length) {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     }
-  }, { threshold: 0.12 });
-  reveals.forEach((el) => io.observe(el));
-} else {
-  reveals.forEach((el) => el.classList.add("in"));
-}
+  };
+  const onScroll = () => {
+    if (!queued) { queued = true; requestAnimationFrame(check); }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  check();
+};
+
+const startPage = () => {
+  startReveal();
+  startTyping();
+  if (!reduceMotion) document.querySelectorAll("h1 .name").forEach((el, i) => decode(el, 250 + i * 220));
+};
+
+// ---- 起動画面 (1 セッションに 1 回) ----
+(() => {
+  const boot = document.getElementById("boot");
+  let seen = false;
+  try { seen = sessionStorage.getItem("booted") === "1"; } catch {}
+  if (reduceMotion || seen) {
+    boot.remove();
+    startPage();
+    return;
+  }
+  try { sessionStorage.setItem("booted", "1"); } catch {}
+
+  const log = document.getElementById("boot-log");
+  const bar = document.getElementById("boot-bar");
+  const lines = [
+    '<span class="hi">lylack-os</span> v1.0',
+    '<span class="ok">[ ok ]</span> loading profile ........ boku lylack',
+    '<span class="ok">[ ok ]</span> mounting skills ........ js, python',
+    '<span class="ok">[ ok ]</span> linking accounts ....... x, github, discord',
+    '<span class="ok">[ ok ]</span> rendering works ........ done',
+    '<span class="hi">&gt; ready</span>',
+  ];
+  let i = 0;
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    boot.classList.add("done");
+    startPage();
+    setTimeout(() => boot.remove(), 600);
+  };
+  const step = () => {
+    if (finished) return;
+    log.innerHTML += (i ? "\n" : "") + lines[i];
+    i++;
+    bar.style.width = `${(i / lines.length) * 100}%`;
+    if (i < lines.length) setTimeout(step, 180 + Math.random() * 120);
+    else setTimeout(finish, 350);
+  };
+  setTimeout(step, 150);
+  boot.addEventListener("click", finish);
+  window.addEventListener("keydown", finish, { once: true });
+})();
 
 // ---- タイルのマウス追従ライト ----
 document.querySelectorAll(".tile").forEach((t) => {
@@ -191,4 +320,42 @@ document.querySelectorAll(".tile").forEach((t) => {
       if (!document.hidden) raf = requestAnimationFrame(loop);
     });
   }
+})();
+
+// ---- 専用カーソル (マウス操作のときだけ) ----
+(() => {
+  if (!matchMedia("(pointer: fine)").matches) return;
+  const dot = document.querySelector(".cursor-dot");
+  const ring = document.querySelector(".cursor-ring");
+  const root = document.documentElement;
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  let started = false;
+
+  window.addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    mx = e.clientX;
+    my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px)`;
+    if (!started) {
+      started = true;
+      rx = mx; ry = my;
+      root.classList.add("has-cursor");
+      requestAnimationFrame(follow);
+    }
+    root.classList.remove("cursor-hidden");
+  });
+  document.addEventListener("pointerleave", () => root.classList.add("cursor-hidden"));
+  window.addEventListener("pointerdown", () => ring.classList.add("down"));
+  window.addEventListener("pointerup", () => ring.classList.remove("down"));
+  document.addEventListener("pointerover", (e) => {
+    ring.classList.toggle("hover", !!e.target.closest("a, button"));
+  });
+
+  const follow = () => {
+    const k = reduceMotion ? 1 : 0.18;
+    rx += (mx - rx) * k;
+    ry += (my - ry) * k;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(follow);
+  };
 })();

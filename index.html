@@ -20,6 +20,15 @@
   <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot-inner">
+      <pre id="boot-log"></pre>
+      <div class="boot-bar"><i id="boot-bar"></i></div>
+    </div>
+  </div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
   <canvas id="field" aria-hidden="true"></canvas>
   <div class="glow glow-a" aria-hidden="true"></div>
   <div class="glow glow-b" aria-hidden="true"></div>
@@ -34,7 +43,7 @@
     <header class="hero">
       <div class="avatar reveal" id="avatar" aria-hidden="true"><span>b</span></div>
       <p class="prompt reveal"><span class="user">guest@lylack</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
-      <h1 class="reveal"><span class="name">boku</span> <span class="name grad">lylack</span></h1>
+      <h1 class="reveal" aria-label="boku lylack"><span class="name" data-text="boku" aria-hidden="true">boku</span> <span class="name grad" data-text="lylack" aria-hidden="true">lylack</span></h1>
       <p class="tagline reveal">Aether City を開発しています。</p>
       <div class="cta reveal">
         <a class="btn primary" href="#contact">Contact<span aria-hidden="true">→</span></a>
@@ -93,6 +102,14 @@
         <p class="dim">お問い合わせはメールで受け付けています。</p>
         <a class="mail" id="mail" href="#"><span>メールアドレスを表示</span><b aria-hidden="true">→</b></a>
       </article>
+    </section>
+
+    <section class="works" id="works">
+      <div class="sec-head reveal">
+        <p class="label">08 / works</p>
+        <h2>つくったもの</h2>
+      </div>
+      <div class="works-grid" id="works-grid"></div>
     </section>
 
     <footer class="foot">
