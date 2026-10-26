@@ -1,9 +1,10 @@
 // ===== 設定 =====
-// リンクの URL はここを書き換える。url が空のものは「準備中」と表示される。
+// リンクの URL はここを書き換える。copy を指定したものはクリックでその文字をコピーする。
+// url も copy も無いものは「準備中」と表示される。
 const LINKS = [
-  { name: "X",       id: "",          url: "", icon: "x" },
+  { name: "X",       id: "@boku_murder", url: "https://x.com/boku_murder", icon: "x" },
   { name: "GitHub",  id: "@boku224",  url: "https://github.com/boku224", icon: "github" },
-  { name: "Discord", id: "",          url: "", icon: "discord" },
+  { name: "Discord", id: "boku0317",  copy: "boku0317", icon: "discord" },
 ];
 
 // アイコン画像を置いたらパスを書く (例: "assets/avatar.png")。空ならイニシャル表示。
@@ -27,6 +28,20 @@ for (const l of LINKS) {
     a.href = l.url;
     a.target = "_blank";
     a.rel = "noopener noreferrer";
+  } else if (l.copy) {
+    a.href = "#";
+    a.title = "クリックでユーザー名をコピー";
+    a.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const idEl = a.querySelector(".id");
+      try {
+        await navigator.clipboard.writeText(l.copy);
+        idEl.textContent = "コピーしました";
+      } catch {
+        idEl.textContent = l.copy;
+      }
+      setTimeout(() => { idEl.textContent = l.id || l.copy; }, 1500);
+    });
   } else {
     a.className = "disabled";
     a.setAttribute("aria-disabled", "true");
@@ -35,7 +50,7 @@ for (const l of LINKS) {
     `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[l.icon] || ""}</svg>` +
     `<span><span class="name"></span><span class="id"></span></span>`;
   a.querySelector(".name").textContent = l.name;
-  a.querySelector(".id").textContent = l.url ? (l.id || "") : "準備中";
+  a.querySelector(".id").textContent = (l.url || l.copy) ? (l.id || "") : "準備中";
   li.appendChild(a);
   linksEl.appendChild(li);
 }
