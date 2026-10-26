@@ -120,6 +120,29 @@ a { color: inherit; }
   70%, 100% { box-shadow: 0 0 0 8px rgba(94, 230, 195, 0); }
 }
 
+.nav-right { display: flex; align-items: center; gap: 10px; }
+.lang {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(7, 9, 13, .6);
+  backdrop-filter: blur(8px);
+}
+.lang button {
+  padding: 2px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color .2s, background .2s;
+}
+.lang button:hover { color: var(--text); }
+.lang button[aria-pressed="true"] { background: var(--accent); color: #04110d; }
+
 /* ---------- layout ---------- */
 .wrap {
   max-width: 1040px;
@@ -667,6 +690,42 @@ h1 {
 .work.soon { pointer-events: none; }
 .work.soon .work-title { color: var(--muted); }
 
+/* ---------- uses ---------- */
+.uses { padding-top: 96px; }
+.uses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.use-cat { display: flex; flex-direction: column; }
+.use-cat h3 {
+  margin: 0 0 14px;
+  font-family: var(--display);
+  font-size: 18px;
+  letter-spacing: -.01em;
+}
+.use-list { list-style: none; margin: 0; padding: 0; }
+.use-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 9px 0;
+}
+.use-list li + li { border-top: 1px solid var(--line); }
+.use-list .n { font-weight: 500; white-space: nowrap; }
+.use-list .n::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 10px;
+  border-radius: 2px;
+  background: var(--accent);
+  vertical-align: 2px;
+  opacity: .8;
+}
+.use-list .d { padding-left: 16px; font-size: 13px; line-height: 1.6; color: var(--muted); }
+
 /* ---------- responsive ---------- */
 @media (max-width: 860px) {
   .bento { grid-template-columns: repeat(2, 1fr); }
@@ -675,9 +734,11 @@ h1 {
   .bento { grid-template-columns: 1fr 1fr; gap: 12px; }
   .span-2 { grid-column: span 2; }
   .tile { padding: 20px; }
+  .tile.work { padding: 0; }
   .glyph { font-size: 48px; }
   .scroll { display: none; }
-  .works { padding-top: 64px; }
+  .works, .uses { padding-top: 64px; }
+  .status { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

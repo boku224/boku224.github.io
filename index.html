@@ -35,8 +35,14 @@
   <div class="noise" aria-hidden="true"></div>
 
   <nav class="nav">
-    <a class="logo" href="#top" aria-label="トップへ">lylack<span>.</span></a>
-    <span class="status"><i></i>building</span>
+    <a class="logo" href="#top" data-i18n-aria="toTop" aria-label="トップへ">lylack<span>.</span></a>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="ja" aria-pressed="true">JA</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <span class="status"><i></i>building</span>
+    </div>
   </nav>
 
   <main class="wrap" id="top">
@@ -44,19 +50,19 @@
       <div class="avatar reveal" id="avatar" aria-hidden="true"><span>b</span></div>
       <p class="prompt reveal"><span class="user">guest@lylack</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
       <h1 class="reveal" aria-label="boku lylack"><span class="name" data-text="boku" aria-hidden="true">boku</span> <span class="name grad" data-text="lylack" aria-hidden="true">lylack</span></h1>
-      <p class="tagline reveal">Aether City を開発しています。</p>
+      <p class="tagline reveal" data-i18n="tagline">Aether City を開発しています。</p>
       <div class="cta reveal">
         <a class="btn primary" href="#contact">Contact<span aria-hidden="true">→</span></a>
         <a class="btn" href="https://github.com/boku224" target="_blank" rel="noopener noreferrer">GitHub<span aria-hidden="true">↗</span></a>
       </div>
-      <a class="scroll reveal" href="#bento" aria-label="下へ"><span></span></a>
+      <a class="scroll reveal" href="#bento" data-i18n-aria="down" aria-label="下へ"><span></span></a>
     </header>
 
     <section class="bento" id="bento">
       <article class="tile about span-2 reveal">
         <p class="label">01 / about</p>
-        <h2>つくるのが好き。</h2>
-        <p>ゲームサーバーの開発をしています。スクリプトから UI、制作用のツールまで、必要なものは自分で作るのが好きです。</p>
+        <h2 data-i18n="aboutH">つくるのが好き。</h2>
+        <p data-i18n="aboutP">ゲームサーバーの開発をしています。スクリプトから UI、制作用のツールまで、必要なものは自分で作るのが好きです。</p>
       </article>
 
       <article class="tile now span-2 reveal">
@@ -65,7 +71,7 @@
           <span class="pulse" aria-hidden="true"></span>
           <div>
             <p class="now-title">Aether City</p>
-            <p class="dim">を開発中</p>
+            <p class="dim" data-i18n="nowSub">を開発中</p>
           </div>
         </div>
         <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -98,18 +104,26 @@
 
       <article class="tile contact span-2 reveal" id="contact">
         <p class="label">07 / contact</p>
-        <h2>お気軽にどうぞ。</h2>
-        <p class="dim">お問い合わせはメールで受け付けています。</p>
-        <a class="mail" id="mail" href="#"><span>メールアドレスを表示</span><b aria-hidden="true">→</b></a>
+        <h2 data-i18n="contactH">お気軽にどうぞ。</h2>
+        <p class="dim" data-i18n="contactP">お問い合わせはメールで受け付けています。</p>
+        <a class="mail" id="mail" href="#"><span data-i18n="mailShow">メールアドレスを表示</span><b aria-hidden="true">→</b></a>
       </article>
     </section>
 
     <section class="works" id="works">
       <div class="sec-head reveal">
         <p class="label">08 / works</p>
-        <h2>つくったもの</h2>
+        <h2 data-i18n="worksH">つくったもの</h2>
       </div>
       <div class="works-grid" id="works-grid"></div>
+    </section>
+
+    <section class="uses" id="uses">
+      <div class="sec-head reveal">
+        <p class="label">09 / uses</p>
+        <h2 data-i18n="usesH">使っている道具</h2>
+      </div>
+      <div class="uses-grid" id="uses-grid"></div>
     </section>
 
     <footer class="foot">
