@@ -684,5 +684,4 @@ h1 {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .boot { display: none; }
 }

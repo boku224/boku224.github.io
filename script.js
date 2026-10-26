@@ -164,7 +164,6 @@ const decode = (el, delay) => {
 const typed = document.getElementById("typed");
 const startTyping = () => {
   const cmd = "whoami";
-  if (reduceMotion) { typed.textContent = cmd; return; }
   let i = 0;
   const tick = () => {
     typed.textContent = cmd.slice(0, ++i);
@@ -204,7 +203,8 @@ const startReveal = () => {
 const startPage = () => {
   startReveal();
   startTyping();
-  if (!reduceMotion) document.querySelectorAll("h1 .name").forEach((el, i) => decode(el, 250 + i * 220));
+  // 起動画面・解読・タイピングは数秒で終わる短い演出なので「動きを減らす」設定でも出す
+  document.querySelectorAll("h1 .name").forEach((el, i) => decode(el, 250 + i * 220));
 };
 
 // ---- 起動画面 (1 セッションに 1 回) ----
@@ -212,7 +212,7 @@ const startPage = () => {
   const boot = document.getElementById("boot");
   let seen = false;
   try { seen = sessionStorage.getItem("booted") === "1"; } catch {}
-  if (reduceMotion || seen) {
+  if (seen) {
     boot.remove();
     startPage();
     return;
