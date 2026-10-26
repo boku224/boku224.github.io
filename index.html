@@ -8,64 +8,93 @@
   <meta property="og:title" content="boku lylack">
   <meta property="og:description" content="Aether City を開発しています。">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#0b0e14">
+  <meta name="theme-color" content="#07090d">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
-  <div class="grid-bg" aria-hidden="true"></div>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
-  <main class="wrap">
+  <nav class="nav">
+    <a class="logo" href="#top" aria-label="トップへ">BL<span>.</span></a>
+    <span class="status"><i></i>building</span>
+  </nav>
+
+  <main class="wrap" id="top">
     <header class="hero">
-      <div class="avatar" id="avatar" aria-hidden="true"><span>BL</span></div>
-      <div class="hero-text">
-        <p class="prompt"><span class="user">guest@lylack</span>:<span class="path">~</span>$ <span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
-        <h1>boku lylack</h1>
-        <p class="tagline">Aether City を開発しています。</p>
+      <div class="avatar reveal" id="avatar" aria-hidden="true"><span>BL</span></div>
+      <p class="prompt reveal"><span class="user">guest@lylack</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
+      <h1 class="reveal"><span class="name">boku</span> <span class="name grad">lylack</span></h1>
+      <p class="tagline reveal">Aether City を開発しています。</p>
+      <div class="cta reveal">
+        <a class="btn primary" href="#contact">Contact<span aria-hidden="true">→</span></a>
+        <a class="btn" href="https://github.com/boku224" target="_blank" rel="noopener noreferrer">GitHub<span aria-hidden="true">↗</span></a>
       </div>
+      <a class="scroll reveal" href="#bento" aria-label="下へ"><span></span></a>
     </header>
 
-    <section class="card" aria-labelledby="about-h">
-      <h2 id="about-h"><span class="hash">#</span> about</h2>
-      <p>ゲームサーバーの開発をしています。スクリプトから UI、制作用のツールまで、必要なものは自分で作るのが好きです。</p>
-    </section>
+    <section class="bento" id="bento">
+      <article class="tile about span-2 reveal">
+        <p class="label">01 / about</p>
+        <h2>つくるのが好き。</h2>
+        <p>ゲームサーバーの開発をしています。スクリプトから UI、制作用のツールまで、必要なものは自分で作るのが好きです。</p>
+      </article>
 
-    <section class="card" aria-labelledby="skills-h">
-      <h2 id="skills-h"><span class="hash">#</span> skills</h2>
-      <ul class="skills">
-        <li>
-          <span class="lang js">JS</span>
+      <article class="tile now span-2 reveal">
+        <p class="label">02 / now</p>
+        <div class="now-row">
+          <span class="pulse" aria-hidden="true"></span>
           <div>
-            <strong>JavaScript</strong>
-            <p>Web の UI、ツール、ブラウザで動くアプリ</p>
+            <p class="now-title">Aether City</p>
+            <p class="dim">を開発中</p>
           </div>
-        </li>
-        <li>
-          <span class="lang py">Py</span>
-          <div>
-            <strong>Python</strong>
-            <p>自動化スクリプト、データ変換、制作ツール</p>
-          </div>
-        </li>
-      </ul>
-    </section>
+        </div>
+        <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </article>
 
-    <section class="card" aria-labelledby="links-h">
-      <h2 id="links-h"><span class="hash">#</span> links</h2>
-      <ul class="links" id="links"></ul>
-    </section>
+      <article class="tile skill js reveal">
+        <p class="label">03 / skill</p>
+        <p class="glyph">JS</p>
+        <p class="skill-name">JavaScript</p>
+        <code><span class="k">console</span>.log(<span class="s">"hello"</span>)</code>
+      </article>
 
-    <section class="card" aria-labelledby="contact-h">
-      <h2 id="contact-h"><span class="hash">#</span> contact</h2>
-      <p>お問い合わせはメールでどうぞ。</p>
-      <p class="mail"><a id="mail" href="#">メールアドレスを表示</a></p>
+      <article class="tile skill py reveal">
+        <p class="label">04 / skill</p>
+        <p class="glyph">Py</p>
+        <p class="skill-name">Python</p>
+        <code><span class="k">print</span>(<span class="s">"hello"</span>)</code>
+      </article>
+
+      <article class="tile clock span-2 reveal">
+        <p class="label">05 / local time</p>
+        <p class="time" id="clock">--:--<span>:--</span></p>
+        <p class="dim">Tokyo, Japan · JST (UTC+9)</p>
+      </article>
+
+      <article class="tile links span-2 reveal">
+        <p class="label">06 / links</p>
+        <ul id="links"></ul>
+      </article>
+
+      <article class="tile contact span-2 reveal" id="contact">
+        <p class="label">07 / contact</p>
+        <h2>お気軽にどうぞ。</h2>
+        <p class="dim">お問い合わせはメールで受け付けています。</p>
+        <a class="mail" id="mail" href="#"><span>メールアドレスを表示</span><b aria-hidden="true">→</b></a>
+      </article>
     </section>
 
     <footer class="foot">
       <span>&copy; <span id="year"></span> boku lylack</span>
+      <span class="dim">made with plain HTML / CSS / JS</span>
     </footer>
   </main>
 
